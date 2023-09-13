@@ -3,6 +3,7 @@
 
 
     //var_dump($pdo);
+    //A LISTAGEM
 
     $sql = "SELECT * FROM tb_pessoa";
 
@@ -11,8 +12,19 @@
 
         $dados = $statement->fetchAll(PDO::FETCH_OBJ); //retorna uma lista de acordo com o registro do banco de dados já no formato de objeto(FETCH_OBJ)
 
-
     //var_dump($dados);
+
+    //TRECHO DE EDIÇÃO - ao clicar em editar os dados vao aparecer nos campos de edição
+    $dadosEdit = null;
+    if(isset($_REQUEST['id_pessoa'])){
+        $id = $_REQUEST['id_pessoa'];
+        $sqlEdit = "SELECT * FROM tb_pessoa WHERE id_pessoa = :id";
+        $statementEdit = $pdo->prepare($sqlEdit);
+        $statementEdit->bindParam(":id", $id);
+        $statementEdit->execute();
+        $dadosEdit = $statementEdit->fetch(PDO::FETCH_OBJ);
+    }
+
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +37,20 @@
 <body>
 
     <form method = "post" action="incluir.php"> 
-        Nome: <input type="text" name="nome" value = "nome">
-        Data de Nascimento: <input type="date" name="nascimento" value = "dt_nascimento">
-        Email: <input type="text" name="email" value = "email">
+        <!-- esse nome tem que ser igual ao banco de dados (id_pessoa) para atualizar-->
+       <input type = "hidden" name = "id_pessoa"   
+        value = "<?php echo  $dadosEdit != null ?
+                             $dadosEdit->id_pessoa : '' ?>">
+        Nome: <input type="text" name="nome" 
+        value = "<?php echo  $dadosEdit != null ?
+                             $dadosEdit->tx_nome : '' ?>">
+        Data de Nascimento: <input type="date" name="nascimento" 
+        value = "<?php echo  $dadosEdit != null ? 
+                             $dadosEdit->dt_nascimento : '' ?>">
+        Email: <input type="text" name="email" 
+        value = "<?php echo  $dadosEdit != null ? 
+                             $dadosEdit->tx_email : '' ?>">
+
         <input type="submit" name="Salvar">
         <input type="reset" name="Apagar">
         
@@ -55,7 +78,9 @@
                 <td><?php echo $linha->dt_nascimento ?></td>
                 
                 <td><?php echo $linha->tx_email ?></td>
-                <td><a href="#">Editar</a> | <a href="excluir.php?id_pessoa=<?php echo $linha->id_pessoa ?>">Excluir</a> </td>
+                <td>
+                    <a href="index.php?id_pessoa=<?php echo $linha->id_pessoa?>">Editar</a> | <!--Toda vez queeu clicar em editar, volta com os dados da pessoa que eu cliquei na aba de edição -->
+                    <a href="excluir.php?id_pessoa=<?php echo $linha->id_pessoa ?>">Excluir</a> </td>
            </tr> 
         <?php } ?>
 
