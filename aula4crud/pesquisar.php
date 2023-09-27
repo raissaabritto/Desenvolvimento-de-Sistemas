@@ -36,7 +36,8 @@
   <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-
+    <a href="logout.php">Sair</a>
+    
     <form method = "post" action="incluir.php"> 
         <!-- esse nome tem que ser igual ao banco de dados (id_pessoa) para atualizar-->
        <input type = "hidden" name = "id_pessoa"   
