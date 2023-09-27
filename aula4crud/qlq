@@ -1,0 +1,12 @@
+    <form method="post" action="login.php">
+        Usuário: <input type="text" name="usuario">
+        Senha: <input type="password" name="senha">
+        <input type="submit" name="Entrar">
+    </form>
+
+    <a href="#">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
