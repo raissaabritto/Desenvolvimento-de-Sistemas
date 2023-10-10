@@ -1,3 +1,8 @@
+<?php
+  $mensagem = isset($_REQUEST['mensagem']) ? $_REQUEST['mensagem'] :'';
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -10,6 +15,7 @@
 
 <div class="login-box">
   <h2>Login</h2>
+  <!--
   <form method="post" action="login.php">
     <div class="user-box">
       <input type="text" name="" required="">
@@ -24,12 +30,21 @@
     </div>
   </form>
 </div>
-<!--
-    <form method="post" action="login.php">
-        Usuário: <input type="text" name="usuario">
+--> 
+    <form style="color:#ffff" method="post" action="login.php">
+        Usuário: <input type="text" name="email">
+        <br>
         Senha: <input type="password" name="senha">
         <input type="submit" name="Entrar">
-    </form>--> 
+    </form>
+
+    <div style="color: red">
+    <?php
+    echo $mensagem;
+    ?>
+    </div>
+
+</div>
     
 </body>
 </html>
